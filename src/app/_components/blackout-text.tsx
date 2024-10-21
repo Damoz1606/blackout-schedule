@@ -1,13 +1,13 @@
 'use client'
 
+import dayConfig from '@/lib/day.config';
 import { useCalendar } from '../_context/calendar.provider'
-import dayjs from 'dayjs';
 
 const BlackoutText = () => {
 
     const { date } = useCalendar();
 
-    return `Fecha de corte: ${dayjs(date).format('YYYY-MM-DD')}`
+    return `Fecha de corte: ${dayConfig(date).format('YYYY-MM-DD')}`
 }
 
 export default BlackoutText

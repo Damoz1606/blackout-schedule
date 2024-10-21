@@ -1,8 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { fakeFetcher } from '@/lib/fake/fetcher.db';
 import { CnelPayload, PlanificationDetail } from '@/lib/interface/cnel.interface';
 import { Blackout } from '@/lib/interface/blackout.interface';
-import dayjs from 'dayjs'
 import BlackoutForm from './_components/blackout-form';
 import CalendarProvider from './_context/calendar.provider';
 import BlackoutCalendar from './_components/blackout-calendar';
@@ -12,13 +10,7 @@ import Lightbulb from './_components/light-bulb';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { fetchBlackout } from '@/server/cnel';
 import React from 'react';
-
-import timezone from "dayjs/plugin/timezone";
-import utc from "dayjs/plugin/utc";
-
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault('UTC -5')
+import dayConfig from '@/lib/day.config';
 
 interface HomePageProps {
   searchParams: { [key: string]: string | string[] | undefined }
@@ -46,7 +38,7 @@ const HomePage: React.FC<HomePageProps> = async ({
     blackouts = data.notificaciones
       .reduce((prev, curr) => [...prev, ...curr.detallePlanificacion], [] as PlanificationDetail[])
       .reduce((prev, curr) => {
-        const currentDate = dayjs(curr.fechaHoraCorte).format('YYYY-MM-DD');
+        const currentDate = dayConfig(curr.fechaHoraCorte).format('YYYY-MM-DD');
         const existing = prev[currentDate] ? prev[currentDate] : [];
         return {
           ...prev,
@@ -55,13 +47,13 @@ const HomePage: React.FC<HomePageProps> = async ({
       }, {} as Blackout);
   }
 
-  const dates: Date[] = blackouts ? Object.keys(blackouts).map(e => dayjs(e).toDate()) : [];
+  const dates: Date[] = blackouts ? Object.keys(blackouts).map(e => dayConfig(e).toDate()) : [];
 
   return (
     <main className="w-screen h-screen p-4">
       <div className="h-full flex flex-col md:grid md:grid-cols-3 gap-x-4 gap-y-8">
         <div className="relative flex flex-col w-full md:col-span-2 justify-center items-center h-[185px] md:h-full">
-          <Lightbulb blackout={blackouts ? blackouts[dayjs().format('YYYY-MM-DD')] : []} />
+          <Lightbulb blackout={blackouts ? blackouts[dayConfig().format('YYYY-MM-DD')] : []} />
         </div>
         <div className='relative h-full'>
           <ScrollArea className='!absolute top-0 left-0 right-0 bottom-0'>

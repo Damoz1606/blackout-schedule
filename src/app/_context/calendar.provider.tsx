@@ -1,6 +1,6 @@
 "use client"
 
-import dayjs from "dayjs";
+import dayConfig from "@/lib/day.config";
 import React, { createContext, useContext, useState } from "react";
 
 interface CalendarContextProps {
@@ -22,7 +22,7 @@ const CalendarProvider: React.FC<{
     children
 }) => {
 
-        const [value, setValue] = useState(dayjs().format('YYYY-MM-DD'));
+        const [value, setValue] = useState(dayConfig().format('YYYY-MM-DD'));
 
         return (
             <CalendarContext.Provider value={{

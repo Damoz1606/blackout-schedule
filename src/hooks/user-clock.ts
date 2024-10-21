@@ -1,6 +1,6 @@
 'use client'
 
-import dayjs from "dayjs";
+import dayConfig from "@/lib/day.config";
 import { useCallback, useEffect, useState } from "react";
 
 export const useClock = () => {
@@ -16,8 +16,8 @@ export const useClock = () => {
     }, [tick]);
 
     return {
-        hour: dayjs(date).hour(),
-        minute: dayjs(date).minute(),
-        seconds: dayjs(date).second()
+        hour: dayConfig(date).hour(),
+        minute: dayConfig(date).minute(),
+        seconds: dayConfig(date).second()
     }
 }
