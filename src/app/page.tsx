@@ -13,6 +13,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { fetchBlackout } from '@/server/cnel';
 import React from 'react';
 
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.tz.setDefault('GMT-5')
+
 interface HomePageProps {
   searchParams: { [key: string]: string | string[] | undefined }
 }
