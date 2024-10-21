@@ -18,7 +18,7 @@ import utc from "dayjs/plugin/utc";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
-dayjs.tz.setDefault('GMT-5')
+dayjs.tz.setDefault('UTC -5')
 
 interface HomePageProps {
   searchParams: { [key: string]: string | string[] | undefined }
